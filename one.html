@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SplitMaster</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f6fb;
+    color:#171b2d;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+    background:#12162b;
+    color:white;
+    padding:25px 18px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:24px;
+    font-weight:bold;
+    margin:8px 12px 35px;
+}
+
+.logo-box{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    background:linear-gradient(135deg,#6559f5,#a665ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.nav-title{
+    font-size:11px;
+    color:#747c96;
+    margin:20px 12px 8px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.nav a{
+    display:block;
+    color:#aeb5c9;
+    text-decoration:none;
+    padding:13px 14px;
+    border-radius:11px;
+    margin:5px 0;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.nav a:hover,
+.nav a.active{
+    background:#272c4b;
+    color:white;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:240px;
+    width:calc(100% - 240px);
+}
+
+/* HEADER */
+
+.header{
+    height:76px;
+    background:white;
+    border-bottom:1px solid #e8e9ef;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 35px;
+}
+
+.search{
+    background:#f4f5f9;
+    border:1px solid #e7e8ef;
+    border-radius:11px;
+    padding:11px 15px;
+    width:300px;
+}
+
+.search input{
+    border:0;
+    outline:0;
+    background:none;
+    width:90%;
+    margin-left:8px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#6357ed,#9b65f7);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* CONTENT */
+
+.content{
+    padding:32px;
+    max-width:1400px;
+    margin:auto;
+}
+
+.welcome{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.small{
+    color:#6b60ee;
+    font-size:12px;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+h1{
+    font-size:32px;
+    margin:6px 0;
+}
+
+.muted{
+    color:#7c8497;
+    font-size:14px;
+}
+
+/* BUTTON */
+
+.add{
+    background:linear-gradient(135deg,#6257ee,#805cf5);
+    color:white;
+    padding:13px 18px;
+    border:0;
+    border-radius:11px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 10px 25px #6357ee30;
+}
+
+.add:hover{
+    transform:translateY(-2px);
+}
+
+/* STAT CARDS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:22px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e8e9ef;
+    border-radius:17px;
+    box-shadow:0 12px 35px #18203d0b;
+}
+
+.stat{
+    padding:20px;
+}
+
+.label{
+    font-size:11px;
+    color:#81889a;
+    font-weight:bold;
+}
+
+.value{
+    font-size:26px;
+    font-weight:bold;
+    margin-top:13px;
+}
+
+.green{
+    color:#12a467;
+}
+
+.red{
+    color:#e14d5a;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:1.35fr .8fr;
+    gap:20px;
+}
+
+.card-head{
+    padding:20px;
+    border-bottom:1px solid #eeeef3;
+}
+
+.title{
+    font-size:16px;
+    font-weight:bold;
+}
+
+.sub{
+    font-size:11px;
+    color:#8a91a1;
+    margin-top:4px;
+}
+
+/* EXPENSE */
+
+.expense{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:17px 20px;
+    border-bottom:1px solid #f0f1f4;
+}
+
+.expense:last-child{
+    border-bottom:0;
+}
+
+.eicon{
+    width:44px;
+    height:44px;
+    border-radius:13px;
+    background:#f1f0ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.einfo{
+    flex:1;
+}
+
+.ename{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.meta{
+    font-size:11px;
+    color:#8990a0;
+    margin-top:4px;
+}
+
+.amount{
+    text-align:right;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.share{
+    font-size:10px;
+    color:#8a91a1;
+    margin-top:4px;
+}
+
+/* PEOPLE */
+
+.person{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:15px 20px;
+    border-bottom:1px solid #f0f1f4;
+}
+
+.person:last-child{
+    border:0;
+}
+
+.pavatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#e9e8ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#5e55dc;
+    font-weight:bold;
+}
+
+.pinfo{
+    flex:1;
+}
+
+.pname{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.pmeta{
+    font-size:10px;
+    color:#8b92a1;
+    margin-top:3px;
+}
+
+.badge{
+    padding:6px 8px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:bold;
+    background:#eaf9f2;
+    color:#09915a;
+}
+
+/* BOTTOM */
+
+.bottom{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    margin-top:20px;
+}
+
+.group{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:15px 20px;
+    border-bottom:1px solid #f0f1f4;
+}
+
+.group:last-child{
+    border:0;
+}
+
+.gicon{
+    font-size:23px;
+}
+
+.gname{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.gmeta{
+    font-size:10px;
+    color:#8a91a1;
+    margin-top:3px;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:#10142b99;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.box{
+    background:white;
+    width:430px;
+    border-radius:20px;
+    padding:25px;
+}
+
+.box h2{
+    margin-bottom:20px;
+}
+
+.field{
+    margin-bottom:14px;
+}
+
+.field label{
+    display:block;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:6px;
+    color:#636b7e;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:12px;
+    border:1px solid #dfe1e8;
+    border-radius:10px;
+    outline:none;
+}
+
+.actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:18px;
+}
+
+.cancel{
+    padding:11px 15px;
+    border:0;
+    border-radius:10px;
+    background:#eef0f5;
+    cursor:pointer;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:#171b30;
+    color:white;
+    padding:13px 17px;
+    border-radius:11px;
+    display:none;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:75px;
+    }
+
+    .logo span,
+    .nav a span,
+    .nav-title{
+        display:none;
+    }
+
+    .nav a{
+        text-align:center;
+    }
+
+    .main{
+        margin-left:75px;
+        width:calc(100% - 75px);
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .grid,
+    .bottom{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .header{
+        padding:0 15px;
+    }
+
+    .search{
+        width:180px;
+    }
+
+    .content{
+        padding:20px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .welcome{
+        display:block;
+    }
+
+    .welcome .add{
+        margin-top:15px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-box">S</div>
+        <span>SplitMaster</span>
+    </div>
+
+    <div class="nav-title">Menu</div>
+
+    <div class="nav">
+
+        <a class="active" href="#">
+            ⌂ <span>Dashboard</span>
+        </a>
+
+        <a href="#expenses">
+            ↔ <span>Expenses</span>
+        </a>
+
+        <a href="#groups">
+            ◈ <span>Groups</span>
+        </a>
+
+        <a href="#settlements">
+            ✓ <span>Settlements</span>
+        </a>
+
+    </div>
+
+    <div class="nav-title">Account</div>
+
+    <div class="nav">
+
+        <a href="#">
+            ♙ <span>Friends</span>
+        </a>
+
+        <a href="#">
+            ⚙ <span>Settings</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="header">
+
+    <div class="search">
+
+        ⌕
+
+        <input
+            id="search"
+            placeholder="Search expenses..."
+            onkeyup="searchExpenses()"
+        >
+
+    </div>
+
+    <div class="avatar">
+        LR
+    </div>
+
+</header>
+
+
+<section class="content">
+
+
+<!-- WELCOME -->
+
+<div class="welcome">
+
+    <div>
+
+        <div class="small">
+            Your Dashboard
+        </div>
+
+        <h1>
+            Welcome back, Laxman 👋
+        </h1>
+
+        <p class="muted">
+            Manage your shared expenses without the headache.
+        </p>
+
+    </div>
+
+    <button
+        class="add"
+        onclick="openModal()"
+    >
+        ＋ Add Expense
+    </button>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+    <div class="card stat">
+
+        <div class="label">
+            YOU ARE OWED
+        </div>
+
+        <div class="value green">
+            ₹4,280
+        </div>
+
+        <div class="muted">
+            From 4 friends
+        </div>
+
+    </div>
+
+
+    <div class="card stat">
+
+        <div class="label">
+            YOU OWE
+        </div>
+
+        <div class="value red">
+            ₹1,750
+        </div>
+
+        <div class="muted">
+            To 2 friends
+        </div>
+
+    </div>
+
+
+    <div class="card stat">
+
+        <div class="label">
+            NET BALANCE
+        </div>
+
+        <div class="value green">
+            +₹2,530
+        </div>
+
+        <div class="muted">
+            You are in credit
+        </div>
+
+    </div>
+
+
+    <div class="card stat">
+
+        <div class="label">
+            THIS MONTH
+        </div>
+
+        <div class="value">
+            ₹12,840
+        </div>
+
+        <div class="muted">
+            Shared spending
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- EXPENSES + BALANCES -->
+
+<div class="grid">
+
+
+<section class="card" id="expenses">
+
+    <div class="card-head">
+
+        <div class="title">
+            Recent Expenses
+        </div>
+
+        <div class="sub">
+            Your latest shared spending
+        </div>
+
+    </div>
+
+
+    <div id="expenseList">
+
+
+        <div
+            class="expense"
+            data-name="dinner rooftop crew"
+        >
+
+            <div class="eicon">
+                🍜
+            </div>
+
+            <div class="einfo">
+
+                <div class="ename">
+                    Rooftop Dinner
+                </div>
+
+                <div class="meta">
+                    Rooftop Crew · Paid by Arjun
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="amount">
+                    ₹2,460
+                </div>
+
+                <div class="share">
+                    Your share ₹615
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="expense"
+            data-name="airport uber goa"
+        >
+
+            <div class="eicon">
+                🚕
+            </div>
+
+            <div class="einfo">
+
+                <div class="ename">
+                    Airport Uber
+                </div>
+
+                <div class="meta">
+                    Goa Trip · Paid by You
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="amount">
+                    ₹1,180
+                </div>
+
+                <div class="share green">
+                    You lent ₹885
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="expense"
+            data-name="weekly groceries flat"
+        >
+
+            <div class="eicon">
+                🛒
+            </div>
+
+            <div class="einfo">
+
+                <div class="ename">
+                    Weekly Groceries
+                </div>
+
+                <div class="meta">
+                    Flat 4B · Paid by Neha
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="amount">
+                    ₹3,920
+                </div>
+
+                <div class="share">
+                    Your share ₹980
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="expense"
+            data-name="movie weekend friends"
+        >
+
+            <div class="eicon">
+                🎬
+            </div>
+
+            <div class="einfo">
+
+                <div class="ename">
+                    Weekend Movie
+                </div>
+
+                <div class="meta">
+                    Friends · Paid by You
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="amount">
+                    ₹1,600
+                </div>
+
+                <div class="share green">
+                    You lent ₹1,200
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BALANCES -->
+
+<section
+    class="card"
+    id="settlements"
+>
+
+    <div class="card-head">
+
+        <div class="title">
+            Balances
+        </div>
+
+        <div class="sub">
+            Who owes whom
+        </div>
+
+    </div>
+
+
+    <div class="person">
+
+        <div class="pavatar">
+            AK
+        </div>
+
+        <div class="pinfo">
+
+            <div class="pname">
+                Arjun Kumar
+            </div>
+
+            <div class="pmeta">
+                Rooftop Crew
+            </div>
+
+        </div>
+
+        <span class="badge">
+            +₹1,240
+        </span>
+
+    </div>
+
+
+    <div class="person">
+
+        <div class="pavatar">
+            NS
+        </div>
+
+        <div class="pinfo">
+
+            <div class="pname">
+                Neha Sharma
+            </div>
+
+            <div class="pmeta">
+                Flat 4B
+            </div>
+
+        </div>
+
+        <span class="badge">
+            +₹980
+        </span>
+
+    </div>
+
+
+    <div class="person">
+
+        <div class="pavatar">
+            RV
+        </div>
+
+        <div class="pinfo">
+
+            <div class="pname">
+                Rahul Verma
+            </div>
+
+            <div class="pmeta">
+                Goa Trip
+            </div>
+
+        </div>
+
+        <span
+            class="badge"
+            style="background:#fff0f1;color:#d13c49"
+        >
+            −₹650
+        </span>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- GROUPS + CHART -->
+
+<div
+    class="bottom"
+    id="groups"
+>
+
+
+<section class="card">
+
+    <div class="card-head">
+
+        <div class="title">
+            Your Groups
+        </div>
+
+        <div class="sub">
+            Shared expense groups
+        </div>
+
+    </div>
+
+
+    <div class="group">
+
+        <div class="gicon">
+            🏖️
+        </div>
+
+        <div>
+
+            <div class="gname">
+                Goa Trip
+            </div>
+
+            <div class="gmeta">
+                6 members · 18 expenses
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="group">
+
+        <div class="gicon">
+            🏠
+        </div>
+
+        <div>
+
+            <div class="gname">
+                Flat 4B
+            </div>
+
+            <div class="gmeta">
+                4 members · 31 expenses
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="group">
+
+        <div class="gicon">
+            🍽️
+        </div>
+
+        <div>
+
+            <div class="gname">
+                Friends
+            </div>
+
+            <div class="gmeta">
+                5 members · 12 expenses
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="card">
+
+    <div class="card-head">
+
+        <div class="title">
+            Monthly Overview
+        </div>
+
+        <div class="sub">
+            Shared expenses this month
+        </div>
+
+    </div>
+
+
+    <div style="padding:25px">
+
+        <div
+            style="font-size:28px;font-weight:bold"
+        >
+            ₹12,840
+        </div>
+
+        <div class="muted">
+            Total shared spending
+        </div>
+
+
+        <div
+            style="
+            height:100px;
+            display:flex;
+            align-items:end;
+            gap:9px;
+            margin-top:20px;
+            "
+        >
+
+            <i style="height:35%;flex:1;background:#e9e8ff;border-radius:7px"></i>
+
+            <i style="height:55%;flex:1;background:#dddafe;border-radius:7px"></i>
+
+            <i style="height:43%;flex:1;background:#cbc8ff;border-radius:7px"></i>
+
+            <i style="height:72%;flex:1;background:#aaa5ff;border-radius:7px"></i>
+
+            <i style="height:62%;flex:1;background:#8982fa;border-radius:7px"></i>
+
+            <i style="height:88%;flex:1;background:#6d63f3;border-radius:7px"></i>
+
+            <i style="height:75%;flex:1;background:#554be8;border-radius:7px"></i>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- ADD EXPENSE MODAL -->
+
+<div
+    class="modal"
+    id="modal"
+>
+
+<div class="box">
+
+    <h2>
+        Add Expense
+    </h2>
+
+
+    <form onsubmit="addExpense(event)">
+
+        <div class="field">
+
+            <label>
+                EXPENSE NAME
+            </label>
+
+            <input
+                id="title"
+                required
+                placeholder="e.g. Dinner"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                AMOUNT
+            </label>
+
+            <input
+                id="amount"
+                type="number"
+                min="1"
+                required
+                placeholder="₹ 0"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                GROUP
+            </label>
+
+            <select>
+
+                <option>
+                    Goa Trip
+                </option>
+
+                <option>
+                    Flat 4B
+                </option>
+
+                <option>
+                    Friends
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                type="button"
+                class="cancel"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button class="add">
+                Save Expense
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+>
+    Expense added ✓
+</div>
+
+
+<script>
+
+function openModal(){
+
+    document
+        .getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modal")
+        .classList.remove("show");
+
+}
+
+
+function addExpense(event){
+
+    event.preventDefault();
+
+    const title =
+        document.getElementById("title").value;
+
+    const amount =
+        Number(
+            document.getElementById("amount").value
+        ).toLocaleString("en-IN");
+
+
+    const row =
+        document.createElement("div");
+
+    row.className="expense";
+
+    row.dataset.name=
+        title.toLowerCase();
+
+
+    row.innerHTML=`
+
+        <div class="eicon">
+            💳
+        </div>
+
+        <div class="einfo">
+
+            <div class="ename">
+                ${title}
+            </div>
+
+            <div class="meta">
+                Just now · Paid by You
+            </div>
+
+        </div>
+
+        <div>
+
+            <div class="amount">
+                ₹${amount}
+            </div>
+
+            <div class="share green">
+                Added successfully
+            </div>
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById("expenseList")
+        .prepend(row);
+
+
+    event.target.reset();
+
+    closeModal();
+
+    showToast();
+
+}
+
+
+function showToast(){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.style.display="block";
+
+
+    setTimeout(function(){
+
+        toast.style.display="none";
+
+    },2200);
+
+}
+
+
+function searchExpenses(){
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+
+    document
+        .querySelectorAll(".expense")
+        .forEach(function(expense){
+
+            if(
+                expense.dataset.name
+                .includes(search)
+            ){
+
+                expense.style.display="flex";
+
+            }
+            else{
+
+                expense.style.display="none";
+
+            }
+
+        });
+
+}
+
+
+document
+    .getElementById("modal")
+    .addEventListener("click",function(event){
+
+        if(event.target.id==="modal"){
+
+            closeModal();
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
