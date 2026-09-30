@@ -1,0 +1,91 @@
+{
+  "info": {
+    "name": "Expense Splitter Pro",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "groupId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/health"
+      }
+    },
+    {
+      "name": "Users",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/users"
+      }
+    },
+    {
+      "name": "Groups",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/groups"
+      }
+    },
+    {
+      "name": "Dashboard",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/groups/{{groupId}}/dashboard"
+      }
+    },
+    {
+      "name": "Members",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/groups/{{groupId}}/members"
+      }
+    },
+    {
+      "name": "Expenses",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/groups/{{groupId}}/expenses"
+      }
+    },
+    {
+      "name": "Balances",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/groups/{{groupId}}/balances"
+      }
+    },
+    {
+      "name": "Settlements",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/api/groups/{{groupId}}/settlements"
+      }
+    },
+    {
+      "name": "Add Expense",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"description\":\"Pizza night\",\"amount\":1200,\"payer_id\":1,\"category\":\"Food\",\"split_type\":\"equal\",\"splits\":[{\"user_id\":1},{\"user_id\":2},{\"user_id\":3},{\"user_id\":4}]}"
+        },
+        "url": "{{base}}/api/groups/{{groupId}}/expenses"
+      }
+    }
+  ]
+}
